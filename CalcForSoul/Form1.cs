@@ -22,7 +22,24 @@ namespace CalcForSoul
         {
             try
             {
-                string exp = UserText.Text.Replace(",", ".") + ".0";
+                int index = 0;
+
+                string exp = UserText.Text.Replace(",", ".").Trim();
+
+                for (int i = 0; i < exp.Length; i++)
+                {
+                    if (!Char.IsDigit(exp[i]))
+                    {
+                        index = i;
+                        break;
+                    }
+                }
+
+                if (index != 0)
+                {
+                    var temp = exp.Substring(index);
+                    exp = exp.Replace(temp, ".0" + temp);
+                }
 
                 CalculateText.Text = Convert.ToString(new DataTable().Compute(exp, ""));
 
